@@ -5,3 +5,5 @@
 build
 gradlew.bat
 gradlew
+.DS_Store
+.gitattributes
