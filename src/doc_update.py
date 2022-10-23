@@ -12,44 +12,39 @@ import json
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/documents']
 
-# The ID of a sample document.
-DOCUMENT_ID = '161eG6oAB1G_YMum66AeZzbiRpCwaq5Ic8pF7kSyK-Z8'
 
-
-def main():
+# return a message when successfully update doc content, return error otherwise
+# The ID of a sample document: '161eG6oAB1G_YMum66AeZzbiRpCwaq5Ic8pF7kSyK-Z8'
+def doc_update(intro: str, link: str, doc_id: str = '161eG6oAB1G_YMum66AeZzbiRpCwaq5Ic8pF7kSyK-Z8') -> str:
     try:
         # Create service endpoint
-        service = build('docs', 'v1', credentials=getCredentials())
+        service = build('docs', 'v1', credentials=get_credentials())
 
         # Retrieve the documents contents from the Docs service.
-        document = service.documents().get(documentId=DOCUMENT_ID).execute()
-
+        document = service.documents().get(documentId=doc_id).execute()
         print('The title of the document is: {}'.format(document.get('title')))
-
 
         # Start to build batch requests
         # Format text
         res = service.new_batch_http_request()
-        intro = "Here is the link to your video clip: "
-        link = "https://www.youtube.com\n"
         requests = [
             {
                 'insertText': {
                     'location': {
                         'index': 1,
                     },
-                    'text': intro + link,
+                    'text': intro + link + "\n",
                 }
             },
             {
                 'updateTextStyle': {
                     'range': {
-                        'startIndex': len(intro),
-                        'endIndex': len(intro) + len(link)
+                        'startIndex': len(intro) + 1,
+                        'endIndex': len(intro) + len(link) + 1
                     },
                     'textStyle': {
                         'link': {
-                            'url': 'https://www.youtube.com'
+                            'url': link
                         }
                     },
                     'fields': 'link'
@@ -78,10 +73,14 @@ def main():
         ]
 
         result = service.documents().batchUpdate(
-            documentId=DOCUMENT_ID, body={'requests': requests}).execute()
+            documentId=doc_id, body={'requests': requests}).execute()
+        return "successfully updated the doc"
     except HttpError as err:
         print(err)
-def getCredentials():
+        return err
+
+
+def get_credentials():
     """Shows basic usage of the Docs API.
        Prints the title of a sample document.
        """
@@ -104,6 +103,7 @@ def getCredentials():
             token.write(creds.to_json())
     return creds
 
+
 if __name__ == '__main__':
-    main()
+    doc_update()
 # [END docs_quickstart]
