@@ -7,3 +7,5 @@ gradlew.bat
 gradlew
 .DS_Store
 .gitattributes
+.idea
+__pycache__
