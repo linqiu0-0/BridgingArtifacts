@@ -2,8 +2,6 @@ from flask import Flask, Response, request
 from Zoom.doc_update import doc_update
 import urllib.parse
 import json
-from threading import Thread
-import os
 
 app = Flask(__name__)
 
@@ -29,7 +27,6 @@ def route_to_add_To_Doc():
     return "invalid methods"
 
 
-
 @app.route("/slackInteractions", methods=['POST'])
 def route_slack_interaction():
     if request.method == 'POST':
@@ -41,4 +38,3 @@ def route_slack_interaction():
         doc_update(decoded_json["message"]["text"])
         return Response(), 200
     return Response(), 200
-
