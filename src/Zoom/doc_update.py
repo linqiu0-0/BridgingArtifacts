@@ -7,7 +7,6 @@ from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
 from googleapiclient.errors import HttpError
-import json
 
 # If modifying these scopes, delete the file token.json.
 SCOPES = ['https://www.googleapis.com/auth/documents']
@@ -15,7 +14,7 @@ SCOPES = ['https://www.googleapis.com/auth/documents']
 
 # return a message when successfully update doc content, return error otherwise
 # The ID of a sample document: '161eG6oAB1G_YMum66AeZzbiRpCwaq5Ic8pF7kSyK-Z8'
-def doc_update(intro: str, link: str, doc_id: str = '161eG6oAB1G_YMum66AeZzbiRpCwaq5Ic8pF7kSyK-Z8') -> str:
+def doc_update(intro: str, link: str = " ", doc_id: str = '161eG6oAB1G_YMum66AeZzbiRpCwaq5Ic8pF7kSyK-Z8') -> str:
     try:
         # Create service endpoint
         service = build('docs', 'v1', credentials=get_credentials())
@@ -26,7 +25,6 @@ def doc_update(intro: str, link: str, doc_id: str = '161eG6oAB1G_YMum66AeZzbiRpC
 
         # Start to build batch requests
         # Format text
-        res = service.new_batch_http_request()
         requests = [
             {
                 'insertText': {
@@ -54,7 +52,7 @@ def doc_update(intro: str, link: str, doc_id: str = '161eG6oAB1G_YMum66AeZzbiRpC
                 'updateParagraphStyle': {
                     'range': {
                         'startIndex': 1,
-                        'endIndex': 10
+                        'endIndex': 1
                     },
                     'paragraphStyle': {
                         'namedStyleType': 'HEADING_1',
@@ -88,22 +86,21 @@ def get_credentials():
     # The file token.json stores the user's access and refresh tokens, and is
     # created automatically when the authorization flow completes for the first
     # time.
-    if os.path.exists('../token.json'):
-        creds = Credentials.from_authorized_user_file('../token.json', SCOPES)
+    if os.path.exists('../resources/token.json'):
+        creds = Credentials.from_authorized_user_file('../resources/token.json', SCOPES)
     # If there are no (valid) credentials available, let the user log in.
     if not creds or not creds.valid:
         if creds and creds.expired and creds.refresh_token:
             creds.refresh(Request())
         else:
             flow = InstalledAppFlow.from_client_secrets_file(
-                '../credentials.json', SCOPES)
+                '../resources/DocsCredentials.json', SCOPES)
             creds = flow.run_local_server(port=0)
         # Save the credentials for the next run
-        with open('../token.json', 'w') as token:
+        with open('../resources/token.json', 'w') as token:
             token.write(creds.to_json())
     return creds
 
-
-if __name__ == '__main__':
-    doc_update()
-# [END docs_quickstart]
+#
+# if __name__ == '__main__':
+#     doc_update()
