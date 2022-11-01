@@ -31,10 +31,10 @@ def route_to_add_To_Doc():
 def route_slack_interaction():
     if request.method == 'POST':
         data = request.stream.read().decode("utf-8")
-        print(data, flush=True)
+        # print(data, flush=True)
         url_decoded = urllib.parse.unquote(data).split("=")[1]
         decoded_json = json.loads(url_decoded)
-        print(decoded_json, flush=True)
-        doc_update(decoded_json["message"]["text"])
+        # print(decoded_json, flush=True)
+        doc_update(decoded_json["message"]["text"].replace("+"," "))
         return Response(), 200
     return Response(), 200

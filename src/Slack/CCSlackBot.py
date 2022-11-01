@@ -6,12 +6,12 @@ client = WebClient(token='xoxb-14627938628-4255555908278-Bf6yXKpFnJYpPQqg6waoQ5c
 
 
 # the default conversation is Ruotong, Shreya, and Lin's conversation
-def sendMessages(channel_id: str = "C03V4F09NPJ") -> int:
+def sendMessages(channel_id: str = "C047U5E6Q2Y", text: str = "Hello world!"):
     try:
         # Call the conversations.list method using the WebClient
         result = client.chat_postMessage(
             channel=channel_id,
-            text="Hello world!"
+            text=text
             # You could also use a blocks[] array to send richer content
         )
         # Print result, which includes information about the message (like TS)
@@ -23,6 +23,6 @@ def sendMessages(channel_id: str = "C03V4F09NPJ") -> int:
         print(f"Got an error: {e.response['error']}")
 
 
+
 if __name__ == '__main__':
     sendMessages()
-
