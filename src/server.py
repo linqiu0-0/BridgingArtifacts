@@ -1,7 +1,8 @@
 from flask import Flask, Response, request
-from Zoom.doc_update import doc_update
+from Doc.doc_update import doc_update
 import urllib.parse
 import json
+import requests
 
 app = Flask(__name__)
 
@@ -10,6 +11,14 @@ app = Flask(__name__)
 def index():
     return "index"
 
+@app.route("/zoom")
+def zoomApp():
+    print("call main page3", flush=True)
+    return "zoom app home page"
+
+@app.route("/zoomoauth")
+def zoomOauth():
+    return "zoom oauth"
 
 @app.route("/docUpdate", methods=['POST', 'GET'])
 def route_to_doc_update():
@@ -38,3 +47,4 @@ def route_slack_interaction():
         doc_update(decoded_json["message"]["text"].replace("+"," "))
         return Response(), 200
     return Response(), 200
+
