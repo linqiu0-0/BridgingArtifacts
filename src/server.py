@@ -4,7 +4,6 @@ from flask import Flask, Response, request
 import urllib.parse
 import json
 from flask_cors import CORS
-import requests
 
 from Doc.doc_update import doc_update
 from Doc.doc_add_meeting_header import add_meeting_header
@@ -55,6 +54,15 @@ def route_to_add_To_Doc():
         return Response(), 200
     return "invalid methods"
 
+
+@app.route("/Doc/receive", methods=['POST'])
+def route_to_doc_receive():
+    if request.method == 'POST':
+        print(request.form, flush=True)
+        #TODO: Try to link this router to the CCSlackBot to send message
+
+        return Response(), 200
+    return "invalid methods"
 
 @app.route("/slack/addNextMeeting", methods=['POST'])
 def route_to_add_next_meeting():
