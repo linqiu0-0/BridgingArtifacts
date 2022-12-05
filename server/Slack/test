@@ -1,0 +1,27 @@
+ function postRequest() {
+      console.log("triggered")
+      // Make a POST request
+      var header = {
+      "user-agent": "Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/81.0.4044.138 Mobile Safari/537.36"
+      };
+
+
+      var payload = {
+          "Id": 78912,
+          "Customer": "Jason Sweet",
+          "Quantity": 1,
+          "Price": 18.00
+      }
+
+      var options = {
+        'method' : 'POST',
+        'headers' : header,
+        'payload': payload
+      };
+
+      response = UrlFetchApp.fetch('https://bridgingartifacts.ngrok.io//slack/addToDoc', options);
+
+      console.log(response)
+
+      json_response = JSON.parse(response)
+    }
