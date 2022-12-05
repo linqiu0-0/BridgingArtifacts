@@ -3,6 +3,7 @@
 Sever directory contains the Slask App, the back-end part of Google Doc and the flask server itself.
 The zoom directory contains the Zoom web app, Zoom web signature service and Zoom internal app.
 Server.py builds a simple server which can responds to the get and post request.
+
 To run the sever, first install all dependencies in requirements.txt by running `pip install -r requirements.txt`. It will be easier to maintain the dependencies in the virtual envrionment.[See Useful Commands 1]
 You can launch server by running `flask --app server --debug run` in the src directory.
 
