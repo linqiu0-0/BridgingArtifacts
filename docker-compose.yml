@@ -1,0 +1,20 @@
+version: '3'
+services:
+  flask:
+    build: ./server/.
+    ports:
+      - "5000:5000"
+    volumes:
+      - .:/code
+  zoom-web:
+    build: ./zoom/zoom-meeting-sdk/.
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/code
+  zoom-signature:
+    build: ./zoom/zoom-meeting-signature/.
+    ports:
+      - "4000:4000"
+    volumes:
+      - .:/code
