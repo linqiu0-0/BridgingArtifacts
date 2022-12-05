@@ -1,4 +1,4 @@
-# Bridging Artifact
+# Bridging Artifacts
 
 Sever directory contains the Slask App, the back-end part of Google Doc and the flask server itself.
 The zoom directory contains the Zoom web app, Zoom web signature service and Zoom internal app.
